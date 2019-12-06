@@ -1,5 +1,5 @@
 Konstantin Bogdanoski 			        Mentor: Prof. Sasho Gramatikov
-
+Natasha Stojanova
 ====================== 1 Sostanok =========== 03.12.2019 =====================
 1. Video Streaming App (Spring Boot + ReactJS).
 
