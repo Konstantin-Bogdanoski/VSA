@@ -6,4 +6,4 @@
 | 05.01.2020 | 3h | - CRUD Controller
 | 06.01.2020 | 1h | - CRUD Controller
 
-Total: 8h
+Total: 7h
