@@ -45,6 +45,9 @@ public class AdminController {
             byte[] bytes = video.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + video.getOriginalFilename() + "/" + video.getOriginalFilename());
             Files.write(path, bytes);
+
+            //TODO: Start FFMPEG process to transform the video in HLS format
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,18 +64,35 @@ public class AdminController {
             throw new IncorrectVideoUploadException();
         if (!videoService.findOne(vID).isPresent())
             throw new VideoNotFoundException();
+        // Retrieve video which will be patched
         Video newVid = videoService.findOne(vID).get();
         try {
             newVid.setName(name);
             newVid.setKey();
             newVid.setLength(length);
-            newVid.setFileName(video.getOriginalFilename());
-            // Save info about video in DB
-            videoService.save(newVid);
-            // Get the video and save it somewhere
-            byte[] bytes = video.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + video.getOriginalFilename() + "/" + video.getOriginalFilename());
-            Files.write(path, bytes);
+            if (!video.getOriginalFilename().equals(newVid.getFileName())) {
+                // Get the video and save it somewhere
+                byte[] bytes = video.getBytes();
+                // First delete the old video
+                Path oldPath = Paths.get(UPLOADED_FOLDER + newVid.getFileName() + "/" + newVid.getFileName());
+                Files.deleteIfExists(oldPath);
+
+                // Then save the new video
+                newVid.setFileName(video.getOriginalFilename());
+                Path newPath = Paths.get(UPLOADED_FOLDER + video.getOriginalFilename() + "/" + video.getOriginalFilename());
+                Files.write(newPath, bytes);
+
+                //TODO: Start FFMPEG process to transform the video in HLS format
+
+                // Save info about video in DB
+                videoService.save(newVid);
+            } else {
+                videoService.save(newVid);
+                // Get the video and save it somewhere
+                byte[] bytes = video.getBytes();
+                Path path = Paths.get(UPLOADED_FOLDER + video.getOriginalFilename() + "/" + video.getOriginalFilename());
+                Files.write(path, bytes);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,7 +108,8 @@ public class AdminController {
         videoService.delete(video);
         try {
             Path path = Paths.get(UPLOADED_FOLDER + video.getFileName() + "/" + video.getFileName());
-            Files.delete(path);
+            // Will throw NoSuchFileException if the file does not exist
+            Files.deleteIfExists(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
