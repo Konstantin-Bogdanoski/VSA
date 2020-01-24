@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Video Streaming App",
+  "name": "VSA by Konstantin Bogdanoski & Natasha Stojanova",
   "icons": [
     {
       "src": "favicon.ico",
