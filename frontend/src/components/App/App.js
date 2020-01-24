@@ -26,12 +26,12 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App bg-secondary text-white" style={{height: 100 + "vh"}}>
                 <Router history={history}>
                     <div>
                         <Header/>
-                        <main role="main">
-                            <div className="container">
+                        <main role="main" className="content">
+                            <div className="content">
                                 <Route path="/" exact render={() => <Media/>}/>
                                 <Route path="/media/:videoID" exact render={() => <Video/>}/>
                                 <Route path="/login" exact render={() => <Login/>}/>
