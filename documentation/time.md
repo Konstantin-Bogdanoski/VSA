@@ -6,6 +6,6 @@
 | 05.01.2020 | 3h | - CRUD Controller
 | 06.01.2020 | 1h | - CRUD Controller
 | 24.01.2020 | 5h | - Frontend UI
-| 25.01.2020 | 3h | - Controller and Models
+| 25.01.2020 | 5h | - Controller and Models, Research for streaming videos
 | 25.01.2020 | 4h | - Frontend UI
-Total: 19h
+Total: 21h
