@@ -6,4 +6,5 @@
 | 05.01.2020 | 3h | - CRUD Controller
 | 06.01.2020 | 1h | - CRUD Controller
 | 24.01.2020 | 5h | - Frontend UI
-Total: 12h
+| 25.01.2020 | 3h | - Controller and Models
+Total: 15h

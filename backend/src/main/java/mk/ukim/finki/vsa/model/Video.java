@@ -3,8 +3,9 @@ package mk.ukim.finki.vsa.model;
 import lombok.Getter;
 import lombok.Setter;
 import mk.ukim.finki.vsa.model.base.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,6 +20,11 @@ public class Video extends BaseEntity {
     private String name;
     private String fileName;
     private Double length;
+    private String imdbLink;
+    private Long upvotes;
+    private Long downvotes;
+    @ManyToMany(mappedBy = "videos")
+    private List<Quality> qualities;
 
     public void setKey() {
         this.key = generateKey();
