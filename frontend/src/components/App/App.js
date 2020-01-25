@@ -9,6 +9,7 @@ import Admin from "../Admin/admin";
 import AdminVideo from "../Admin/Media/Video/video";
 import AdminMedia from "../Admin/Media/media";
 import {createBrowserHistory} from "history";
+import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -33,7 +34,7 @@ class App extends Component {
                         <main role="main" className="content glyphicon-fullscreen">
                             <div className="content">
                                 <Route path="/" exact render={() => <Media/>}/>
-                                <Route path="/media/:id" exact render={() => <Video/>}/>
+                                <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
                                 <Route path="/login" exact render={() => <Login/>}/>
                                 <Route path="/admin" exact render={() => <Admin/>}/>
                                 <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>

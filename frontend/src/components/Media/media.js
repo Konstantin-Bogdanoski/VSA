@@ -27,8 +27,10 @@ class Media extends Component {
             videos.push(<Video/>)
         }
         return (
-            <div className="container-fluid row">
-                {videos}
+            <div className="container">
+                <div className="row">
+                    {videos}
+                </div>
             </div>
         );
     }
