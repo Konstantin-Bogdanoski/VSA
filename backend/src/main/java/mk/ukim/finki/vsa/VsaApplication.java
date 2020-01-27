@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class VsaApplication {
-    private int maxUploadSizeInMb = 10 * 1024 * 1024; // 10 MB
+    private int maxUploadSizeInMb = 1000 * 1024 * 1024; // 1000 MB
 
     public static void main(String[] args) {
         SpringApplication.run(VsaApplication.class, args);
@@ -31,5 +32,12 @@ public class VsaApplication {
             }
         });
         return tomcat;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("test123"));
+        return encoder;
     }
 }

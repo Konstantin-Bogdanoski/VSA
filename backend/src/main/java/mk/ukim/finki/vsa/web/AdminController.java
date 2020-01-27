@@ -5,6 +5,7 @@ import mk.ukim.finki.vsa.exception.VideoNotFoundException;
 import mk.ukim.finki.vsa.model.Video;
 import mk.ukim.finki.vsa.service.UserService;
 import mk.ukim.finki.vsa.service.VideoService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -100,7 +101,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete")
-    //@PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video delete(@RequestParam("videoID") Long vID) {
         if (!videoService.findOne(vID).isPresent())
             throw new VideoNotFoundException();

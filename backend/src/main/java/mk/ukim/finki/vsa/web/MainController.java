@@ -33,10 +33,4 @@ public class MainController {
             throw new VideoNotFoundException();
         return video.get();
     }
-
-    @GetMapping("/{id}/stream")
-    public MultipartFile playVideo(@PathVariable(name = "id") Long id, @RequestParam(name = "quality", required = true) short quality) {
-        // TODO: Stream the selected video with the quality
-        return null;
-    }
 }

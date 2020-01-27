@@ -7,6 +7,8 @@ import mk.ukim.finki.vsa.model.base.BaseEntity;
 import mk.ukim.finki.vsa.model.base.UserRole;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +22,8 @@ public class User extends BaseEntity {
     private String username;
     @JsonIgnore
     private String password;
+    private String email;
     private String name;
+    @ManyToOne
     private UserRole userRole;
 }
