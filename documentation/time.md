@@ -8,4 +8,5 @@
 | 24.01.2020 | 5h | - Frontend UI
 | 25.01.2020 | 11h | - Frontend UI, Controller and Models, Research for streaming videos
 | 26.01.2020 | 2h | - Login (Backend)
-Total: 23h
+| 10.02.2020 | 3h | - Login (Frontend + Backend)
+Total: 26h
