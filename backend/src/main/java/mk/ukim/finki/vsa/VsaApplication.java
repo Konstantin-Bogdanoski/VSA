@@ -38,8 +38,6 @@ public class VsaApplication {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode("test123"));
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }

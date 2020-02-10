@@ -23,6 +23,11 @@ import java.util.List;
 @Table(name = "vsa_quality")
 public class Quality extends BaseEntity {
     private String value;
+
+    public Quality(String value) {
+        this.value = value;
+    }
+
     @ManyToMany
     private List<Video> videos;
 }

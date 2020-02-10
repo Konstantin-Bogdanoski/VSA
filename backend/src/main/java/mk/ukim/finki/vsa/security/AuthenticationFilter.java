@@ -40,16 +40,21 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                     .readValue(request.getInputStream(), UserLogin.class);
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-            User user = userService.findByEmail(creds.getEmail());
+            User user = userService.findByUsername(creds.getUsername());
             UserRole role = user.getUserRole();
             authorities.add(new SimpleGrantedAuthority(role.getName()));
             if (!userService.passwordMatches(user, creds.getPassword())) {
                 throw new PasswordsNotTheSameException();
             }
-
+            Authentication tmp = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            creds.getUsername(),
+                            creds.getPassword(),
+                            authorities)
+            );
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            creds.getEmail(),
+                            creds.getUsername(),
                             creds.getPassword(),
                             authorities)
             );

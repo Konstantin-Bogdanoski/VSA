@@ -7,6 +7,7 @@ import mk.ukim.finki.vsa.model.User;
  */
 public interface UserService extends BaseEntityCrudService<User> {
     public User findByEmail(String email);
-
     public boolean passwordMatches(User user, String password);
+
+    public User findByUsername(String username);
 }

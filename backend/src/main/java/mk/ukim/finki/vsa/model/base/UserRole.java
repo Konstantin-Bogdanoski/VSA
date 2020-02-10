@@ -8,6 +8,7 @@ import mk.ukim.finki.vsa.model.User;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,4 +23,9 @@ public class UserRole extends BaseEntity {
     String name;
     @OneToMany(mappedBy = "userRole")
     private List<User> userList;
+
+    public UserRole(String name) {
+        this.name = name;
+        this.userList = new ArrayList<>();
+    }
 }

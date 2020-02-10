@@ -40,4 +40,12 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
     public boolean passwordMatches(User user, String password) {
         return encoder.matches(password, user.getPassword());
     }
+
+    @Override
+    public User findByUsername(String username) {
+        Optional<User> user = repository.findByUsername(username);
+        if (user.isPresent())
+            return user.get();
+        throw new UserNotFoundException();
+    }
 }
