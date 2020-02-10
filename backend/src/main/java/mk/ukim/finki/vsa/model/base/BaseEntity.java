@@ -3,10 +3,7 @@ package mk.ukim.finki.vsa.model.base;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -21,4 +18,15 @@ public class BaseEntity {
     private Long Id;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
+
+    @PrePersist
+    public void prePersist() {
+        this.dateCreated = LocalDateTime.now();
+        this.dateUpdated = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.dateUpdated = LocalDateTime.now();
+    }
 }
