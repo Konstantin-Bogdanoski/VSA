@@ -23,7 +23,11 @@ class Login extends Component {
             "username": this.state.username,
             "password": this.state.password
         };
-        AuthenticationService.loginUser(payload);
+        AuthenticationService.loginUser(payload).then(resp => {
+            console.table(resp);
+        }).catch(error => {
+            alert(error.content.message);
+        });
     }
 
     render() {

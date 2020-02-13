@@ -17,4 +17,5 @@ public class SecurityConstants {
     public static final String RESET_PASSWORD_VERIFICATION_URL = "/users/reset-password-verification";
     public static final String RESET_PASSWORD_SUCCESS_URL = "/users/reset-password-success";
     public static final String LOGIN = "/login";
+    public static final String ALL = "/";
 }

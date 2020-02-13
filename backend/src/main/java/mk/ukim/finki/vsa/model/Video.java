@@ -18,6 +18,7 @@ import java.util.Random;
 public class Video extends BaseEntity {
     private String key;
     private String name;
+    private String imgLink;
     private String fileName;
     private Double length;
     private String imdbLink;

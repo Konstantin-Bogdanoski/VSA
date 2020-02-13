@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Video from "./Video/video";
+import MediaService from "../../repository/MediaService/mediaService";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -7,29 +8,38 @@ import Video from "./Video/video";
 class Media extends Component {
     constructor(props) {
         super(props);
+        this.setState(state => {
+            let movies = [];
+            return {
+                ...state, movies
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.loadMedia();
     }
 
     loadMedia = () => {
-        let videos = [];
-        for (let i = 0; i < 100; i++) {
-            videos.push(<Video/>)
-        }
-        this.setState(() => {
-            return {
-                "videos": videos
-            }
-        });
+        MediaService.loadMedia().then(resp => {
+            let newMovies = resp.map(movie => {
+                return <Video movie={movie}/>
+            });
+            this.setState(state => {
+               return{
+                   "movies": newMovies
+               }
+            })
+        }).catch(error => {
+            alert(error);
+        })
     };
 
     render() {
-        let videos = [];
-        for (let i = 0; i < 100; i++) {
-            videos.push(<Video/>)
-        }
         return (
             <div className="container">
                 <div className="row">
-                    {videos}
+                    {this.state.movies}
                 </div>
             </div>
         );

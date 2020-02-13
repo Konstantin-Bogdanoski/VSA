@@ -42,7 +42,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         RESET_PASSWORD_URL,
                         RESET_PASSWORD_VERIFICATION_URL,
                         LOGIN,
-                        RESET_PASSWORD_SUCCESS_URL).permitAll()
+                        RESET_PASSWORD_SUCCESS_URL,
+                        ALL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), userService))

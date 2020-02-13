@@ -46,18 +46,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             if (!userService.passwordMatches(user, creds.getPassword())) {
                 throw new PasswordsNotTheSameException();
             }
-            Authentication tmp = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            creds.getUsername(),
-                            creds.getPassword(),
-                            authorities)
-            );
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getUsername(),
                             creds.getPassword(),
-                            authorities)
-            );
+                            authorities));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
