@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from "../../axios/axios";
 import AuthenticationService from "../../repository/AuthenticationService/authenticationService";
+import {AUTH_TOKEN} from "../../shared/utility";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -25,6 +26,7 @@ class Login extends Component {
         };
         AuthenticationService.loginUser(payload).then(resp => {
             console.table(resp);
+            localStorage.setItem(AUTH_TOKEN, resp.data);
         }).catch(error => {
             alert(error.content.message);
         });

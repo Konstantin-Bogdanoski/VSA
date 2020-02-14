@@ -10,6 +10,7 @@ import AdminVideo from "../Admin/Media/Video/video";
 import AdminMedia from "../Admin/Media/media";
 import {createBrowserHistory} from "history";
 import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
+import MediaService from "../../repository/MediaService/mediaService";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -21,8 +22,28 @@ class App extends Component {
         super(props);
         this.state = {
             username: "",
-            role: ""
+            role: "",
+            media: [],
         }
+    };
+
+    componentDidMount() {
+        this.loadMedia();
+    }
+
+    loadMedia = () => {
+        MediaService.loadMedia().then(resp => {
+            this.setState(state => {
+                let media = resp.data.map(video => {
+                    return <Video video={video}/>
+                });
+                return {
+                    "media": media,
+                }
+            })
+        }).catch(error => {
+            alert(error);
+        })
     };
 
     render() {
@@ -33,7 +54,7 @@ class App extends Component {
                         <Header/>
                         <main role="main" className="content glyphicon-fullscreen">
                             <div className="content">
-                                <Route path="/" exact render={() => <Media/>}/>
+                                <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
                                 <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
                                 <Route path="/login" exact render={() => <Login/>}/>
                                 <Route path="/admin" exact render={() => <Admin/>}/>

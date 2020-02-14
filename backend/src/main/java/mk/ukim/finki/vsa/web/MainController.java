@@ -1,10 +1,11 @@
 package mk.ukim.finki.vsa.web;
 
 import mk.ukim.finki.vsa.exception.VideoNotFoundException;
+import mk.ukim.finki.vsa.model.User;
 import mk.ukim.finki.vsa.model.Video;
+import mk.ukim.finki.vsa.service.UserService;
 import mk.ukim.finki.vsa.service.VideoService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +15,11 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/video")
+@CrossOrigin("*")
 public class MainController {
     private VideoService videoService;
 
-    public MainController(VideoService videoService) {
+    public MainController(VideoService videoService, UserService userService) {
         this.videoService = videoService;
     }
 

@@ -21,6 +21,7 @@ import java.util.Random;
  */
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin("*")
 public class AdminController {
     private UserService userService;
     private VideoService videoService;

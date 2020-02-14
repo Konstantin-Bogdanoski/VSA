@@ -5,7 +5,7 @@ const MediaService = {
         return axios.get("/api/video");
     },
     loadMovie: (id) => {
-        return axios.get("/api/video/:id");
+        return axios.get("/api/video/" + id);
     },
     playMovie: (id, key) => {
         return "To be implemented";

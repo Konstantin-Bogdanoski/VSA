@@ -13,6 +13,10 @@ public class VideoServiceImpl extends BaseEntityCrudServiceImpl<Video, VideoRepo
 
     private VideoRepository repository;
 
+    public VideoServiceImpl(VideoRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     protected VideoRepository getRepository() {
         return repository;
