@@ -9,12 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Random;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
@@ -25,11 +23,15 @@ import java.util.Random;
 public class AdminController {
     private UserService userService;
     private VideoService videoService;
-    //TODO: Change the folder where the videos will be saved on your PC
     private static String UPLOADED_FOLDER = "/home/konstantin/Videos/";
 
+    public AdminController(UserService userService, VideoService videoService) {
+        this.userService = userService;
+        this.videoService = videoService;
+    }
+
     @PostMapping("/upload")
-    //@PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video upload(@RequestParam("video") MultipartFile video,
                         @RequestParam("name") String name,
                         @RequestParam("length") Double length) {
@@ -57,7 +59,7 @@ public class AdminController {
     }
 
     @PatchMapping("/patch")
-    //@PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video patch(@RequestParam("videoID") Long vID,
                        @RequestParam("video") MultipartFile video,
                        @RequestParam("name") String name,
@@ -116,11 +118,5 @@ public class AdminController {
             e.printStackTrace();
         }
         return video;
-    }
-
-    @GetMapping("/video")
-    public MultipartFile get(@RequestParam("videoID") Long vID) {
-        //TODO: Implement method
-        return null;
     }
 }
