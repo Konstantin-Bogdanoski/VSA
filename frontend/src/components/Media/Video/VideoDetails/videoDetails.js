@@ -20,6 +20,7 @@ class VideoDetails extends Component {
                 ...state, video
             }
         });
+        debugger;
         this.fetchVideo(parseInt(id));
         this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
             console.log('onPlayerReady', this)

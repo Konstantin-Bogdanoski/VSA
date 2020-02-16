@@ -10,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Logger;
+
 /**
  * @author Natasha Stojanova
  */
@@ -19,12 +21,14 @@ public class Initializer implements CommandLineRunner {
     private UserRoleService userRoleService;
     private QualityService qualityService;
     private BCryptPasswordEncoder encoder;
+    private Logger logger;
 
-    public Initializer(UserService userService, UserRoleService userRoleService, QualityService qualityService, BCryptPasswordEncoder encoder) {
+    public Initializer(UserService userService, UserRoleService userRoleService, QualityService qualityService, BCryptPasswordEncoder encoder, Logger logger) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.qualityService = qualityService;
         this.encoder = encoder;
+        this.logger = logger;
     }
 
     @Override
@@ -33,6 +37,7 @@ public class Initializer implements CommandLineRunner {
     }
 
     private void init() {
+        logger.info("Initializer started from Initializer.java");
         if (userRoleService.count() <= 0) {
             userRoleService.save(new UserRole("ROLE_ADMIN"));
             userRoleService.save(new UserRole("ROLE_USER"));
@@ -50,5 +55,6 @@ public class Initializer implements CommandLineRunner {
             qualityService.save(new Quality("Medium"));
             qualityService.save(new Quality("Low"));
         }
+        logger.info("Initializer finished");
     }
 }

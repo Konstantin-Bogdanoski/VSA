@@ -10,4 +10,5 @@
 | 26.01.2020 | 2h | - Login (Backend)
 | 10.02.2020 | 3h | - Login (Frontend + Backend)
 | 14.02.2020 | 4h | - Login & Frontend UI, VideoJS
+| 17.02.2020 | 5h | - File Upload [WIP]
 Total: 30h

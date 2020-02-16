@@ -6,11 +6,11 @@ import Media from "../Media/media";
 import Video from "../Media/Video/video";
 import Login from "../Login/login";
 import Admin from "../Admin/admin";
-import AdminVideo from "../Admin/Media/Video/video";
-import AdminMedia from "../Admin/Media/media";
+import AdminVideo from "../Admin/Video/video";
 import {createBrowserHistory} from "history";
 import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
 import MediaService from "../../repository/MediaService/mediaService";
+import AddVideo from "../Admin/AddVideo/addVideo";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -34,9 +34,7 @@ class App extends Component {
     loadMedia = () => {
         MediaService.loadMedia().then(resp => {
             this.setState(state => {
-                let media = resp.data.map(video => {
-                    return <Video video={video}/>
-                });
+                let media = resp.data;
                 return {
                     "media": media,
                 }
@@ -45,6 +43,34 @@ class App extends Component {
             alert(error);
         })
     };
+
+    updateVideo = ((updatedVideo) => {
+        MediaService.editMovie(updatedVideo).then(resp => {
+            const newVideo = resp.data;
+            this.setState((prevState) => {
+                const newMedia = prevState.media.map(video => {
+                    if (video.id === newVideo.id) {
+                        return newVideo;
+                    }
+                    return video;
+                });
+                return {
+                    "media": newMedia
+                }
+            });
+        });
+    });
+
+    deleteVideo = ((id) => {
+        debugger;
+        MediaService.deleteMovie(id).then();
+        this.setState((prevState) => {
+            const newMedia = prevState.media.filter((video) => {
+                return video.id !== id;
+            });
+            return {"media": newMedia}
+        });
+    });
 
     render() {
         return (
@@ -57,9 +83,9 @@ class App extends Component {
                                 <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
                                 <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
                                 <Route path="/login" exact render={() => <Login/>}/>
-                                <Route path="/admin" exact render={() => <Admin/>}/>
+                                <Route path="/admin" exact render={() => <Admin videos={this.state.media} onDelete={this.deleteVideo}/>}/>
+                                <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
                                 <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>
-                                <Route path="/admin/media" exact render={() => <AdminMedia/>}/>
                             </div>
                         </main>
                     </div>

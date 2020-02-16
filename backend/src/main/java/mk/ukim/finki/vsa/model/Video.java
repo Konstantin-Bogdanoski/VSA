@@ -20,7 +20,6 @@ public class Video extends BaseEntity {
     private String name;
     private String imgLink;
     private String fileName;
-    private Double length;
     private String imdbLink;
     private String description;
     private Long upvotes;
