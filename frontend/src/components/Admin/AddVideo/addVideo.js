@@ -28,26 +28,36 @@ class AddVideo extends Component {
         this.setState({
             selectedFile: e.target.files[0]
         });
-    };
-
-    onSubmit = () => {
-        const formData = new FormData();
+        /*let formData = new FormData();
         formData.append("file", this.state.selectedFile);
-        /*formData.append("name", this.state.name);
-        formData.append("description", this.state.description);
-        formData.append("imdbLink", this.state.imdbLink);
-        formData.append("imgLink", this.state.imgLink);*/
         debugger;
         MediaService.saveMovie(formData)
             .then(res => {
                 debugger;
                 console.log(res.data);
                 alert("File uploaded successfully.");
-                this.props.history.push('/admin');
             })
             .catch(error => {
                 alert(error);
-                console.error(error);
+            })*/
+    };
+
+    onSubmit = () => {
+        const formData = new FormData();
+        formData.append("file", this.state.selectedFile);
+        formData.append("name", this.state.name);
+        formData.append("description", this.state.description);
+        formData.append("imdbLink", this.state.imdbLink);
+        formData.append("imgLink", this.state.imgLink);
+        debugger;
+        MediaService.saveMovie(formData)
+            .then(res => {
+                debugger;
+                console.log(res.data);
+                alert("File uploaded successfully.");
+            })
+            .catch(error => {
+                alert(error);
             })
     };
 
@@ -104,7 +114,7 @@ class AddVideo extends Component {
                         <div
                             className="offset-sm-1 col-sm-3  text-center">
                             <button onClick={this.onSubmit}
-                                type="submit"
+                                type="button"
                                 className="btn btn-primary text-upper">
                                 Save
                             </button>

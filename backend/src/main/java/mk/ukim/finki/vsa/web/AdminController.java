@@ -44,10 +44,10 @@ public class AdminController {
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Video upload(@RequestParam MultipartFile file,
-                        @RequestParam(value = "name") String name,
-                        @RequestParam(value = "description") String description,
-                        @RequestParam(value = "imgLink") String imgLink,
-                        @RequestParam(value = "imdbLink") String imdbLink,
+                        @RequestParam(value = "name", required = false) String name,
+                        @RequestParam(value = "description", required = false) String description,
+                        @RequestParam(value = "imgLink", required = false) String imgLink,
+                        @RequestParam(value = "imdbLink", required = false) String imdbLink,
                         @RequestParam(value = "qualities", required = false) List<String> qualities) {
         if (file.isEmpty() || name.isEmpty())
             throw new IncorrectVideoUploadException();

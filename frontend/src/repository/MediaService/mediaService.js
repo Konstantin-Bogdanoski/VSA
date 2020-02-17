@@ -25,7 +25,8 @@ const MediaService = {
         });
     },
     saveMovie(newMovie) {
-        return axios.post("http://localhost:8080/api/admin", newMovie);
+        debugger;
+        return axios.post("http://localhost:8080/api/admin/upload", newMovie);
     }
 };
 
