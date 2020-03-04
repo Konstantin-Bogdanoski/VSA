@@ -25,8 +25,10 @@ const MediaService = {
         });
     },
     saveMovie(newMovie) {
-        debugger;
-        return axios.post("http://localhost:8080/api/admin/upload", newMovie);
+        return axios.post("/api/admin/upload", newMovie);
+    },
+    deleteMovie(id) {
+        return axios.delete("/api/admin/" + id)
     }
 };
 

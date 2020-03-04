@@ -24,6 +24,7 @@ class App extends Component {
             username: "",
             role: "",
             media: [],
+            waitResponse: false,
         }
     };
 
@@ -32,11 +33,16 @@ class App extends Component {
     }
 
     loadMedia = () => {
+        this.setState({
+            "waitResponse": true
+        });
+
         MediaService.loadMedia().then(resp => {
             this.setState(state => {
                 let media = resp.data;
                 return {
                     "media": media,
+                    "waitResponse": false
                 }
             })
         }).catch(error => {
@@ -45,6 +51,10 @@ class App extends Component {
     };
 
     updateVideo = ((updatedVideo) => {
+        this.setState({
+            "waitResponse": true
+        });
+
         MediaService.editMovie(updatedVideo).then(resp => {
             const newVideo = resp.data;
             this.setState((prevState) => {
@@ -55,20 +65,27 @@ class App extends Component {
                     return video;
                 });
                 return {
-                    "media": newMedia
+                    "media": newMedia,
+                    "waitResponse": false
                 }
             });
         });
     });
 
     deleteVideo = ((id) => {
-        debugger;
+        this.setState({
+            "waitResponse": true
+        });
+
         MediaService.deleteMovie(id).then();
         this.setState((prevState) => {
             const newMedia = prevState.media.filter((video) => {
                 return video.id !== id;
             });
-            return {"media": newMedia}
+            return {
+                "media": newMedia,
+                "waitResponse": false
+            }
         });
     });
 
@@ -78,15 +95,19 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <Header/>
-                        <main role="main" className="content glyphicon-fullscreen">
-                            <div className="content">
-                                <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
-                                <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
-                                <Route path="/login" exact render={() => <Login/>}/>
-                                <Route path="/admin" exact render={() => <Admin videos={this.state.media} onDelete={this.deleteVideo}/>}/>
-                                <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
-                                <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>
-                            </div>
+                        <main id="main" role="main" className="content glyphicon-fullscreen">
+                            {(!this.state.waitResponse ? <div className="content">
+                                    <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
+                                    <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
+                                    <Route path="/login" exact render={() => <Login/>}/>
+                                    <Route path="/admin" exact render={() => <Admin videos={this.state.media}
+                                                                                    onDelete={this.deleteVideo}/>}/>
+                                    <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
+                                    <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>
+                                </div> : <div>
+                                    Please wait while we process your request
+                                </div>
+                            )}
                         </main>
                     </div>
                 </Router>

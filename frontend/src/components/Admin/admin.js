@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import withRouter from "react-router/withRouter";
 import {Link} from "react-router-dom";
+import MediaService from "../../repository/MediaService/mediaService";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
 const Admin = (props) => {
-    if (localStorage.getItem("auth_token") !== null && localStorage.getItem("auth_token") !== undefined) {
-        let movies = props.videos.map(video => {
+    let [videos, setVideos] = useState();
+    useEffect(() => {
+        MediaService.loadMedia().then(resp => {
+            videos = resp.data;
+            setVideos(videos);
+        });
+    }, []);
+
+    if (localStorage.getItem("auth_token") !== null && localStorage.getItem("auth_token") !== undefined && videos !== undefined) {
+        let movies = videos.map(video => {
             return (
                 <tr>
                     <td>
@@ -15,12 +24,6 @@ const Admin = (props) => {
                     </td>
                     <td>
                         {video.name}
-                    </td>
-                    <td>
-                        {video.upvotes}
-                    </td>
-                    <td>
-                        {video.downvotes}
                     </td>
                     <td>
                         {video.dateCreated}
@@ -64,12 +67,6 @@ const Admin = (props) => {
                         </th>
                         <th>
                             Name
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
                         </th>
                         <th>
                             Created At

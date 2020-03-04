@@ -1,69 +1,42 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from "react";
+import VideoPlayer from "../videoPlayer";
 import MediaService from "../../../../repository/MediaService/mediaService";
-import videojs from "video.js";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
-class VideoDetails extends Component {
-    video = null;
+const VideoDetails = () => {
+    let [movie, setMovie] = useState();
+    let id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-        let id = window.location.href.split("/")[4];
-        this.setState(state => {
-            let video = null;
-            return {
-                ...state, video
-            }
+    useEffect(() => {
+        MediaService.loadMovie(id).then((data) => {
+            const movie = data.data;
+            setMovie(movie);
         });
-        debugger;
-        this.fetchVideo(parseInt(id));
-        this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-            console.log('onPlayerReady', this)
-        });
+    }, []);
+
+    let videoJsOptions = "";
+    if (movie !== undefined) {
+        const fileName = "http://localhost/videos/" + movie.fileName;
+        videoJsOptions = {
+            autoplay: false,
+            controls: true,
+            sources: [{
+                src: fileName,
+                type: 'application/dash+xml'
+            }]
+        };
     }
 
-    componentWillUnmount() {
-        if (this.player) {
-            this.player.dispose()
-        }
-    }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        let id = window.location.href.split("/")[4];
-        this.fetchVideo(parseInt(id));
-    }
-
-    fetchVideo(id) {
-        MediaService.loadMovie(id).then(resp => {
-            this.video = resp.data;
-        }).catch(error => {
-            alert(error)
-        });
-    }
-
-    componentWillReceiveProps(newProps) {
-        if (this.player) {
-            this.player.src({
-                type: newProps.video.mime_type,
-                src: newProps.video.video_url
-            });
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <div data-vjs-player>
-                    <video ref={node => this.videoNode = node} className="video-js"/>
-                </div>
+    return (
+        (videoJsOptions !== "" ? <div className="container-fluid text-center">
+            <div data-vjs-player>
+                <VideoPlayer {...videoJsOptions} />
             </div>
-        );
-    }
-}
+        </div> : <div>Please wait while we load the video</div>)
+    );
+};
 
 export default VideoDetails;
