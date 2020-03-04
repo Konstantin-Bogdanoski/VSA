@@ -12,12 +12,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -35,6 +38,20 @@ public class AdminController {
         this.videoService = videoService;
     }
 
+    private void formatVideo(String path) throws IOException, InterruptedException {
+        String loc = UPLOADED_FOLDER + path.replace(" ", "\\ ");
+        String[] cmd = {"/home/konstantin/Videos/formatVideo.sh", loc};
+        Process p = Runtime.getRuntime().exec(cmd);
+        String s;
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+        while ((s = br.readLine()) != null)
+            System.out.println(s);
+        p.waitFor();
+        System.out.println("exit: " + p.exitValue());
+        p.destroy();
+    }
+
     @GetMapping
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public List<Video> get() {
@@ -44,14 +61,14 @@ public class AdminController {
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Video upload(@RequestParam MultipartFile file,
-                        @RequestParam(value = "name", required = false) String name,
-                        @RequestParam(value = "description", required = false) String description,
-                        @RequestParam(value = "imgLink", required = false) String imgLink,
-                        @RequestParam(value = "imdbLink", required = false) String imdbLink,
+                        @RequestParam(value = "name") String name,
+                        @RequestParam(value = "description") String description,
+                        @RequestParam(value = "imgLink") String imgLink,
+                        @RequestParam(value = "imdbLink") String imdbLink,
                         @RequestParam(value = "qualities", required = false) List<String> qualities) {
         if (file.isEmpty() || name.isEmpty())
             throw new IncorrectVideoUploadException();
-        logger.info("Uploading new video");
+        logger.info("[UPLOAD] Uploading new video");
         Video newVid = new Video();
         try {
             newVid.setName(name);
@@ -59,28 +76,34 @@ public class AdminController {
             newVid.setImdbLink(imdbLink);
             newVid.setImgLink(imgLink);
             newVid.setDescription(description);
-            newVid.setFileName(file.getOriginalFilename());
+            String parentDir = Objects.requireNonNull(file.getOriginalFilename()).substring(0, file.getOriginalFilename().length() - 4);
+            newVid.setFileName(parentDir + "/" + file.getOriginalFilename());
             // Get the video and save it somewhere
             byte[] bytes = file.getBytes();
-            File check = new File(UPLOADED_FOLDER + file.getOriginalFilename());
+            File check = new File(UPLOADED_FOLDER + parentDir);
             if (!check.exists()) {
-                check.mkdirs();
-                check = new File(UPLOADED_FOLDER + file.getOriginalFilename() + "/" + file.getOriginalFilename());
-                check.createNewFile();
-
-                Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename() + "/" + file.getOriginalFilename());
+                if (!check.mkdirs())
+                    throw new IOException();
+                check = new File(UPLOADED_FOLDER + newVid.getFileName());
+                if (!check.createNewFile())
+                    throw new IOException();
+                Path path = Paths.get(UPLOADED_FOLDER + newVid.getFileName());
                 Files.write(path, bytes);
-
+                try {
+                    formatVideo(newVid.getFileName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // Save info about video in DB
+                newVid.setFileName(newVid.getFileName() + ".mpd");
                 videoService.save(newVid);
 
-                //TODO: Start FFMPEG process to transform the video in HLS format
             } else
                 throw new VideoAlreadyExistsException();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        logger.info(newVid.getFileName() + " has been uploaded");
+        logger.info("[UPLOAD] " + newVid.getFileName() + " has been uploaded");
         return newVid;
     }
 
@@ -103,24 +126,30 @@ public class AdminController {
         return newVid;
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video delete(@PathVariable("id") Long vID) {
         if (!videoService.findOne(vID).isPresent())
             throw new VideoNotFoundException();
-        logger.info("Trying to remove video");
+        logger.info("[REMOVE] Trying to remove video");
         Video video = videoService.findOne(vID).get();
-        ;
         try {
-            Path path = Paths.get(UPLOADED_FOLDER + video.getFileName() + "/" + video.getFileName());
-            Files.deleteIfExists(path);
-            path = Paths.get(UPLOADED_FOLDER + video.getFileName());
-            Files.deleteIfExists(path);
+            deleteDirectory(new File(UPLOADED_FOLDER + video.getFileName().split("/")[0]));
             videoService.delete(video);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info(video.getFileName() + " has been removed");
+        logger.info("[REMOVE]" + video.getFileName() + " has been removed");
         return video;
+    }
+
+    boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
     }
 }

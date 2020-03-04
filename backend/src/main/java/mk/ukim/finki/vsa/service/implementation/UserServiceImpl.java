@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
@@ -17,6 +18,7 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
 
     private UserRepository repository;
     private BCryptPasswordEncoder encoder;
+    private Logger logger = Logger.getLogger(UserService.class.getName());
 
     public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder) {
         this.repository = repository;
@@ -30,6 +32,7 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
 
     @Override
     public User findByEmail(String email) {
+        logger.info("[PERSISTENCE] Get entity by Email");
         Optional<User> user = repository.findByEmail(email);
         if (user.isPresent())
             return user.get();
@@ -43,6 +46,7 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
 
     @Override
     public User findByUsername(String username) {
+        logger.info("[PERSISTENCE] Get entity by Username");
         Optional<User> user = repository.findByUsername(username);
         if (user.isPresent())
             return user.get();

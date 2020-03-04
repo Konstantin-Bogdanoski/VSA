@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.logging.Logger;
 
 /**
@@ -43,18 +44,22 @@ public class Initializer implements CommandLineRunner {
             userRoleService.save(new UserRole("ROLE_USER"));
         }
         if (userService.count() <= 0) {
-            userService.save(new User("admin",
-                    encoder.encode("test123"),
-                    "admin@mail.com",
-                    "VSA Admin",
-                    userRoleService.findByName("ROLE_ADMIN"))
-            );
+            try {
+                userService.save(new User("admin",
+                        encoder.encode("test123"),
+                        "admin@mail.com",
+                        "VSA Admin",
+                        userRoleService.findByName("ROLE_ADMIN"))
+                );
+            } catch (RoleNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         if (qualityService.count() <= 0) {
             qualityService.save(new Quality("High"));
             qualityService.save(new Quality("Medium"));
             qualityService.save(new Quality("Low"));
         }
-        logger.info("Initializer finished");
+        logger.info("[INITIALIZER] Initializer finished");
     }
 }

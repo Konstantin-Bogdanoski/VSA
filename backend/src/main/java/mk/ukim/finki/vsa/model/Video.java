@@ -3,6 +3,7 @@ package mk.ukim.finki.vsa.model;
 import lombok.Getter;
 import lombok.Setter;
 import mk.ukim.finki.vsa.model.base.BaseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,12 +19,16 @@ import java.util.Random;
 public class Video extends BaseEntity {
     private String key;
     private String name;
+    @Lob
+    @Column(name = "img_link", length = 1000)
     private String imgLink;
     private String fileName;
+    @Lob
+    @Column(name = "imdb_link", length = 1000)
     private String imdbLink;
+    @Lob
+    @Column(name = "description", length = 2000)
     private String description;
-    private Long upvotes;
-    private Long downvotes;
     @ManyToMany(mappedBy = "videos")
     private List<Quality> qualities;
 
