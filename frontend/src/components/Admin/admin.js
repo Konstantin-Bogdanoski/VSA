@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import withRouter from "react-router/withRouter";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import MediaService from "../../repository/MediaService/mediaService";
 
 /**
@@ -55,37 +54,43 @@ const Admin = (props) => {
         });
         return (
             <div className="container text-black-50">
-                <div>
-                    <Link to={"/admin/add"}>+ New Video</Link>
-                    <h1>Videos</h1>
+                <div className="row">
+                    <div className="col-md-1">
+                        <h1>Videos</h1>
+                    </div>
+                    <div className="col-md-10 text-right">
+                        <Link to={"/admin/add"} className="btn btn-info text-left">+ New Video</Link>
+                    </div>
                 </div>
-                <table className="table table-bordered table-hover table-striped">
-                    <thead>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Created At
-                        </th>
-                        <th>
-                            Updated At
-                        </th>
-                        <th>
-                            Edit
-                        </th>
-                        <th>
-                            Delete
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {movies}
-                    </tbody>
-                </table>
+                <div>
+                    <table className="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Created At
+                            </th>
+                            <th>
+                                Updated At
+                            </th>
+                            <th>
+                                Edit
+                            </th>
+                            <th>
+                                Delete
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {movies}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     } else

@@ -48,7 +48,6 @@ public class AdminController {
         while ((s = br.readLine()) != null)
             System.out.println(s);
         p.waitFor();
-        System.out.println("exit: " + p.exitValue());
         p.destroy();
     }
 
@@ -97,7 +96,6 @@ public class AdminController {
                 // Save info about video in DB
                 newVid.setFileName(newVid.getFileName() + ".mpd");
                 videoService.save(newVid);
-
             } else
                 throw new VideoAlreadyExistsException();
         } catch (IOException e) {
@@ -107,7 +105,7 @@ public class AdminController {
         return newVid;
     }
 
-    @PatchMapping("/patch/{id}")
+    @PatchMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video patch(@PathVariable("id") Long vID,
                        @RequestParam("name") String name,
@@ -123,6 +121,7 @@ public class AdminController {
         newVid.setDescription(description);
         newVid.setImgLink(imgLink);
         newVid.setImdbLink(imdbLink);
+        videoService.save(newVid);
         return newVid;
     }
 
@@ -139,7 +138,7 @@ public class AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("[REMOVE]" + video.getFileName() + " has been removed");
+        logger.info("[REMOVE] " + video.getFileName() + " has been removed");
         return video;
     }
 

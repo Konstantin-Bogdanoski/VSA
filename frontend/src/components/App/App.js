@@ -3,7 +3,6 @@ import {Route, Router} from 'react-router-dom'
 import '../../App.css';
 import Header from "../Header/header";
 import Media from "../Media/media";
-import Video from "../Media/Video/video";
 import Login from "../Login/login";
 import Admin from "../Admin/admin";
 import AdminVideo from "../Admin/Video/video";
@@ -11,6 +10,7 @@ import {createBrowserHistory} from "history";
 import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
 import MediaService from "../../repository/MediaService/mediaService";
 import AddVideo from "../Admin/AddVideo/addVideo";
+import EditVideo from "../Admin/Video/EditVideo/editVideo";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -104,6 +104,7 @@ class App extends Component {
                                                                                     onDelete={this.deleteVideo}/>}/>
                                     <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
                                     <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>
+                                    <Route path="/admin/media/:id/edit" exact render={() => <EditVideo onSubmit={this.updateVideo}/>}/>
                                 </div> : <div>
                                     Please wait while we process your request
                                 </div>
