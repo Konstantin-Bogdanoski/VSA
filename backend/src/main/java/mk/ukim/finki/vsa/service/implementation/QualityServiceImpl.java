@@ -1,5 +1,6 @@
 package mk.ukim.finki.vsa.service.implementation;
 
+import mk.ukim.finki.vsa.exception.QualityNotFoundException;
 import mk.ukim.finki.vsa.model.Quality;
 import mk.ukim.finki.vsa.repository.QualityRepository;
 import mk.ukim.finki.vsa.service.QualityService;
@@ -19,5 +20,10 @@ public class QualityServiceImpl extends BaseEntityCrudServiceImpl<Quality, Quali
     @Override
     public QualityRepository getRepository() {
         return qualityRepository;
+    }
+
+    @Override
+    public Quality findByValue(String value) {
+        return getRepository().findByValue(value).orElseThrow(QualityNotFoundException::new);
     }
 }

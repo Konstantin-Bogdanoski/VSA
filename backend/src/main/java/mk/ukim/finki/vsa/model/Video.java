@@ -24,9 +24,6 @@ public class Video extends BaseEntity {
     private String imgLink;
     private String fileName;
     @Lob
-    @Column(name = "imdb_link", length = 1000)
-    private String imdbLink;
-    @Lob
     @Column(name = "description", length = 2000)
     private String description;
     @ManyToMany(mappedBy = "videos")

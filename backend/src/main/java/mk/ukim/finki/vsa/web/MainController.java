@@ -19,7 +19,7 @@ import java.util.Optional;
 public class MainController {
     private VideoService videoService;
 
-    public MainController(VideoService videoService, UserService userService) {
+    public MainController(VideoService videoService) {
         this.videoService = videoService;
     }
 

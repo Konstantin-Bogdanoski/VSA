@@ -1,5 +1,6 @@
 package mk.ukim.finki.vsa.web.handler;
 
+import mk.ukim.finki.vsa.exception.VideoAlreadyExistsException;
 import mk.ukim.finki.vsa.exception.VideoNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,13 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> videoNotFound() {
         return new ResponseEntity<>("Video not found", HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(VideoAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> videoAlreadyExists() {
+        return new ResponseEntity<>("Video already exists", HttpStatus.BAD_REQUEST);
     }
 
     @ResponseBody

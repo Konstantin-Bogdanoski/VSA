@@ -1,5 +1,6 @@
 package mk.ukim.finki.vsa.service.implementation;
 
+import mk.ukim.finki.vsa.exception.VideoNotFoundException;
 import mk.ukim.finki.vsa.model.Video;
 import mk.ukim.finki.vsa.repository.VideoRepository;
 import mk.ukim.finki.vsa.service.VideoService;
@@ -20,5 +21,10 @@ public class VideoServiceImpl extends BaseEntityCrudServiceImpl<Video, VideoRepo
     @Override
     protected VideoRepository getRepository() {
         return repository;
+    }
+
+    @Override
+    public Video findByName(String name) {
+        return getRepository().findByName(name).orElseThrow(VideoNotFoundException::new);
     }
 }
