@@ -12,4 +12,6 @@
 | 14.02.2020 | 4h | - Login & Frontend UI, VideoJS
 | 17.02.2020 | 5h | - File Upload
 | 04.03.2020 | 6h | - VideoJS, MP4Box usage
-Total: 36h
+| 07.03.2020 | 8h | - Video upload + format
+| 08.03.2020 | 3h | - Video upload + format
+Total: 46h
