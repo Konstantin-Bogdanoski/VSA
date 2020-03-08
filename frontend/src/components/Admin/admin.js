@@ -25,25 +25,25 @@ const Admin = (props) => {
                         {video.name}
                     </td>
                     <td>
-                        {video.dateCreated}
+                        {new Date(video.dateCreated).toLocaleString()}
                     </td>
                     <td>
-                        {video.dateUpdated}
+                        {new Date(video.dateUpdated).toLocaleString()}
                     </td>
                     <td>
-                        <div className="col-md-6 text-right">
+                        <div className="col-md-6 text-center">
                             <Link to={"/admin/media/" + video.id + "/edit"}
-                                  className="btn btn-sm btn-secondary">
+                                  className="btn btn-sm btn-info">
                                 <span className="fa fa-edit"/>
                                 <span><strong>Edit</strong></span>
                             </Link>
                         </div>
                     </td>
                     <td>
-                        <div className="col-md-6 text-right">
+                        <div className="col-md-6">
                             <Link to={"/admin"} onClick={() => {
                                 props.onDelete(video.id)
-                            }} className="btn btn-sm btn-outline-secondary ">
+                            }} className="btn btn-sm btn-secondary">
                                 <span className="fa fa-remove"/>
                                 <span><strong>Remove</strong></span>
                             </Link>
@@ -52,19 +52,23 @@ const Admin = (props) => {
                 </tr>
             )
         });
+
         return (
             <div className="container text-black-50">
-                <div className="row">
-                    <div className="col-md-1">
-                        <h1>Videos</h1>
-                    </div>
-                    <div className="col-md-10 text-right">
-                        <Link to={"/admin/add"} className="btn btn-info text-left">+ New Video</Link>
-                    </div>
-                </div>
                 <div>
-                    <table className="table table-bordered table-hover table-striped">
-                        <thead>
+                    <table className="table table-bordered table-hover table-striped table-responsive-lg">
+                        <thead className="table-warning">
+                        <tr>
+                            <th colSpan={6}>
+                                <div style={{width: "33%", display: "inline-block"}}
+                                     className="text-danger text-left align-content-center"><h3>Videos</h3></div>
+                                <div style={{width: "33%", display: "inline-block"}}/>
+                                <div style={{width: "33%", display: "inline-block"}}>
+                                    <Link to={"/admin/add"} className="btn btn-outline-danger text-right">+ New
+                                        Video</Link>
+                                </div>
+                            </th>
+                        </tr>
                         <tr>
                             <th>
                                 ID
@@ -73,10 +77,10 @@ const Admin = (props) => {
                                 Name
                             </th>
                             <th>
-                                Created At
+                                Created
                             </th>
                             <th>
-                                Updated At
+                                Updated
                             </th>
                             <th>
                                 Edit

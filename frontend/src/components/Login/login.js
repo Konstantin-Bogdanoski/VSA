@@ -15,48 +15,65 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            waitResponse: false,
         }
     }
 
     handleClick(event) {
+        this.setState({
+            waitResponse: true,
+        });
         const payload = {
             "username": this.state.username,
             "password": this.state.password
         };
         AuthenticationService.loginUser(payload).then(resp => {
             localStorage.setItem(AUTH_TOKEN, resp.data);
+            this.setState({
+                waitResponse: false,
+            });
             this.props.history.push('/admin');
         }).catch(error => {
             alert(error);
         });
     }
 
+    componentDidMount() {
+        if (localStorage.getItem(AUTH_TOKEN) !== null && localStorage.getItem(AUTH_TOKEN) !== undefined)
+            this.props.history.push("/admin")
+    }
+
     render() {
         return (
             <div>
-                <MuiThemeProvider>
-                    <div>
-                        <AppBar
-                            title="Login"
-                        />
-                        <TextField
-                            hintText="Enter your Username"
-                            floatingLabelText="Username"
-                            onChange={(event, newValue) => this.setState({username: newValue})}
-                        />
-                        <br/>
-                        <TextField
-                            type="password"
-                            hintText="Enter your Password"
-                            floatingLabelText="Password"
-                            onChange={(event, newValue) => this.setState({password: newValue})}
-                        />
-                        <br/>
-                        <RaisedButton label="Submit" primary={true} style={style}
-                                      onClick={(event) => this.handleClick(event)}/>
-                    </div>
-                </MuiThemeProvider>
+                {(!this.state.waitResponse ?
+                    <MuiThemeProvider>
+                        <div>
+                            <h1 className="text-dark">Login</h1>
+                            <TextField
+                                hintText="Enter your Username"
+                                floatingLabelText="Username"
+                                onChange={(event, newValue) => this.setState({username: newValue})}
+                            />
+                            <br/>
+                            <TextField
+                                type="password"
+                                hintText="Enter your Password"
+                                floatingLabelText="Password"
+                                onChange={(event, newValue) => this.setState({password: newValue})}
+                            />
+                            <br/>
+                            <RaisedButton label="Submit" primary={true} style={style}
+                                          onClick={(event) => this.handleClick(event)}/>
+                        </div>
+                    </MuiThemeProvider> :
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}
+                         className="container text-black-50 text-lg-center">
+                        <img alt="" style={{width: "10%"}}
+                             src={require('../../assets/loading.gif')}/>
+                        Please wait while we process your request
+                    </div>)}
             </div>
         );
     }

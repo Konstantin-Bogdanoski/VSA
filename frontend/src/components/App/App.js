@@ -5,7 +5,6 @@ import Header from "../Header/header";
 import Media from "../Media/media";
 import Login from "../Login/login";
 import Admin from "../Admin/admin";
-import AdminVideo from "../Admin/Video/video";
 import {createBrowserHistory} from "history";
 import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
 import MediaService from "../../repository/MediaService/mediaService";
@@ -72,20 +71,21 @@ class App extends Component {
         });
     });
 
+    searchTerm = ((term) => {
+        debugger;
+    });
+
     deleteVideo = ((id) => {
         this.setState({
             "waitResponse": true
         });
 
-        MediaService.deleteMovie(id).then();
-        this.setState((prevState) => {
-            const newMedia = prevState.media.filter((video) => {
-                return video.id !== id;
+        MediaService.deleteMovie(id).then(resp => {
+            this.loadMedia();
+            this.setState({
+                waitResponse: false,
             });
-            return {
-                "media": newMedia,
-                "waitResponse": false
-            }
+            this.props.history.push("/admin")
         });
     });
 
@@ -94,7 +94,7 @@ class App extends Component {
             <div className="App text-white" style={{height: 100 + "vh"}}>
                 <Router history={history}>
                     <div>
-                        <Header/>
+                        <Header searchTerm={this.searchTerm}/>
                         <main id="main" role="main" className="content glyphicon-fullscreen">
                             {(!this.state.waitResponse ? <div className="content">
                                     <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
@@ -103,8 +103,8 @@ class App extends Component {
                                     <Route path="/admin" exact render={() => <Admin videos={this.state.media}
                                                                                     onDelete={this.deleteVideo}/>}/>
                                     <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
-                                    <Route path="/admin/media/:id" exact render={() => <AdminVideo/>}/>
-                                    <Route path="/admin/media/:id/edit" exact render={() => <EditVideo onSubmit={this.updateVideo}/>}/>
+                                    <Route path="/admin/media/:id/edit" exact
+                                           render={() => <EditVideo onSubmit={this.updateVideo}/>}/>
                                 </div> : <div>
                                     Please wait while we process your request
                                 </div>

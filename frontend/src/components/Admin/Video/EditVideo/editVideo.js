@@ -21,7 +21,6 @@ const EditVideo = (props) => {
                 "videoID": id,
                 "name": e.target.name.value,
                 "description": e.target.description.value,
-                "imdbLink": e.target.imdbLink.value,
                 "imgLink": e.target.imgLink.value,
             },
         );
@@ -53,15 +52,6 @@ const EditVideo = (props) => {
                         <div className="col-sm-6">
                             <input type="text" onChange={handleTermOnChange} value={video.description}
                                    className="form-control" id="video" name={"description"}
-                                   placeholder="Video description" required/>
-                        </div>
-                    </div>
-
-                    <div className="form-group row">
-                        <label htmlFor="video" className="col-sm-4 offset-sm-1 text-left text-dark">IMDB Link</label>
-                        <div className="col-sm-6">
-                            <input type="text" onChange={handleTermOnChange} value={video.imdbLink}
-                                   className="form-control" id="video" name={"imdbLink"}
                                    placeholder="Video description" required/>
                         </div>
                     </div>

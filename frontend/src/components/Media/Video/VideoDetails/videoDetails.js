@@ -24,7 +24,7 @@ const VideoDetails = () => {
             controls: true,
             sources: [{
                 src: fileName,
-                type: 'application/dash+xml'
+                type: 'application/x-mpegURL'
             }]
         };
     }
