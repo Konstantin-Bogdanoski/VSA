@@ -54,13 +54,8 @@ public class AdminController {
             quality = 2;
         String[] cmd = {"/home/konstantin/Videos/formatVideo.sh", loc, quality + "", fileName};
         ProcessBuilder pb = new ProcessBuilder(cmd);
-        pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        pb.inheritIO();
         Process p = pb.start();
-        String s;
-        /*BufferedReader br = new BufferedReader(
-                new InputStreamReader(p.getInputStream()));
-        while ((s = br.readLine()) != null)
-            System.out.println(s);*/
         logger.info("[SCRIPT] Waiting for script");
         p.waitFor();
         logger.info("[SCRIPT] Done waiting for script");
