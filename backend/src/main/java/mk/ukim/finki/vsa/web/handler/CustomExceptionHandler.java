@@ -13,6 +13,7 @@ import javax.validation.constraints.Null;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * This class is used to catch some of the runtime exceptions
  */
 @ControllerAdvice
 public class CustomExceptionHandler {

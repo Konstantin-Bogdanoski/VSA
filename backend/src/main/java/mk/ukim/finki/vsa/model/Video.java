@@ -33,10 +33,13 @@ public class Video extends BaseEntity {
         this.key = generateKey();
     }
 
+    /**
+     * Function used to generate a key for each video
+     */
     private String generateKey() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
+        int targetStringLength = 20;
         Random random = new Random();
 
         return random.ints(leftLimit, rightLimit + 1)

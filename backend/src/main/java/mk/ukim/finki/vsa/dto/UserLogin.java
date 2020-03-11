@@ -2,6 +2,7 @@ package mk.ukim.finki.vsa.dto;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * This class is needed for the Login process
  */
 public class UserLogin {
     private String username;

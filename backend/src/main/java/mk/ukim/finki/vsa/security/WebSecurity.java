@@ -36,13 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        REGISTER,
-                        ACTIVATION_TOKEN_VALIDATION,
-                        RESEND_ACTIVATION_EMAIL_URL,
-                        RESET_PASSWORD_URL,
-                        RESET_PASSWORD_VERIFICATION_URL,
                         LOGIN,
-                        RESET_PASSWORD_SUCCESS_URL,
                         VIDEOS).permitAll()
                 .anyRequest().authenticated()
                 .and()

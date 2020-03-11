@@ -15,6 +15,11 @@ import java.util.logging.Logger;
 
 /**
  * @author Natasha Stojanova
+ * This class is called upon every startup of the application
+ * it's use is to create:
+ *                      Admin user
+ *                      Qualities (Low, Medium, High)
+ *                      User Roles
  */
 @Component
 public class Initializer implements CommandLineRunner {

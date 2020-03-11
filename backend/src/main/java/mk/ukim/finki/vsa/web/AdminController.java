@@ -1,6 +1,7 @@
 package mk.ukim.finki.vsa.web;
 
 import mk.ukim.finki.vsa.exception.IncorrectVideoUploadException;
+import mk.ukim.finki.vsa.exception.UnableToDeleteVideoException;
 import mk.ukim.finki.vsa.exception.VideoAlreadyExistsException;
 import mk.ukim.finki.vsa.exception.VideoNotFoundException;
 import mk.ukim.finki.vsa.model.Quality;
@@ -12,10 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +32,14 @@ import java.util.logging.Logger;
 public class AdminController {
     private VideoService videoService;
     private QualityService qualityService;
+    /**
+     * Logger which will help us view the status of our backend service
+     */
     private Logger logger = Logger.getLogger(AdminController.class.getName());
+    /**
+     * Static string which represents the folder where we will store the videos
+     * Update it for your machine
+     */
     private static String UPLOADED_FOLDER = "/home/konstantin/Videos/";
 
     public AdminController(VideoService videoService, QualityService qualityService) {
@@ -41,33 +47,18 @@ public class AdminController {
         this.qualityService = qualityService;
     }
 
-    private void formatVideo(String path, boolean hq, boolean lq) throws IOException, InterruptedException {
-        String loc = UPLOADED_FOLDER + path.split("/")[0];
-        String fileName = path.split("/")[1];
-        // 0 - Medium Quality, 1 - Medium + Low, 2 - Medium + High, 3 - All
-        int quality = 0;
-        if (lq && hq)
-            quality = 3;
-        else if (lq)
-            quality = 1;
-        else if (hq)
-            quality = 2;
-        String[] cmd = {"/home/konstantin/Videos/formatVideo.sh", loc, quality + "", fileName};
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-        pb.inheritIO();
-        Process p = pb.start();
-        logger.info("[SCRIPT] Waiting for script");
-        p.waitFor();
-        logger.info("[SCRIPT] Done waiting for script");
-        p.destroy();
-    }
-
+    /**
+     * Method that retrieves all of the videos in the database
+     */
     @GetMapping
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public List<Video> get() {
         return videoService.findAll();
     }
 
+    /**
+     * Method used for uploading the video
+     */
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Video upload(@RequestParam(required = false) MultipartFile file,
@@ -124,6 +115,11 @@ public class AdminController {
         return newVid;
     }
 
+    /**
+     * Method used to update information about the specific video
+     * NOTE: We will not support remoove+reupload of the video file (.mp4)
+     * because the same process needs to be done as uploading a new video
+     */
     @PatchMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video patch(@PathVariable("id") Long vID,
@@ -142,6 +138,10 @@ public class AdminController {
         return newVid;
     }
 
+
+    /**
+     * Method used to remove the video from the file system and from the database
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video delete(@PathVariable("id") Long vID) {
@@ -150,8 +150,10 @@ public class AdminController {
         logger.info("[REMOVE] Trying to remove video");
         Video video = videoService.findOne(vID).get();
         try {
-            deleteDirectory(new File(UPLOADED_FOLDER + video.getFileName().split("/")[0]));
-            videoService.delete(video);
+            if (deleteDirectory(new File(UPLOADED_FOLDER + video.getFileName().split("/")[0])))
+                videoService.delete(video);
+            else
+                throw new UnableToDeleteVideoException();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,7 +161,11 @@ public class AdminController {
         return video;
     }
 
-    boolean deleteDirectory(File directoryToBeDeleted) {
+
+    /**
+     * Function used to recursively delete a directory containing the video
+     */
+    private boolean deleteDirectory(File directoryToBeDeleted) {
         File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
@@ -167,5 +173,41 @@ public class AdminController {
             }
         }
         return directoryToBeDeleted.delete();
+    }
+
+    /**
+     * Function used to format the video
+     *
+     * @param path = path of the video (video/video.mp4)
+     * @param hq   = is the video HQ (1920x1080)
+     * @param lq   = is the video LQ (800x600)
+     *             Default formatting is the medium quality (1280x720)
+     */
+    private void formatVideo(String path, boolean hq, boolean lq) throws IOException, InterruptedException {
+        String loc = UPLOADED_FOLDER + path.split("/")[0];
+        String fileName = path.split("/")[1];
+        // 0 - Medium Quality, 1 - Medium + Low, 2 - Medium + High, 3 - All
+        int quality = 0;
+        if (lq && hq)
+            quality = 3;
+        else if (lq)
+            quality = 1;
+        else if (hq)
+            quality = 2;
+
+        /*The script formatVideo.sh takes 3 arguements, Location, Quality and FileName
+         Location: Parent folder of video
+              if video.path == /home/konstantin/Videos/video/video.mp4
+                  location = /home/konstantin/Videos/video
+                  fileName = video.mp4 */
+
+        String[] cmd = {UPLOADED_FOLDER + "formatVideo.sh", loc, quality + "", fileName};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        pb.inheritIO();
+        Process p = pb.start();
+        logger.info("[SCRIPT] Waiting for script");
+        p.waitFor();
+        logger.info("[SCRIPT] Done waiting for script");
+        p.destroy();
     }
 }

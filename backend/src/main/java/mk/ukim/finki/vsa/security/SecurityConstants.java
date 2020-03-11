@@ -10,11 +10,5 @@ public class SecurityConstants {
     public static final String VIDEOS = "/api/video/**";
     public static final String SECRET = "VsA@AutTHT0ken";
     public static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    public static final String REGISTER = "/users/register";
-    public static final String ACTIVATION_TOKEN_VALIDATION = "/users/activation_token_verification";
-    public static final String RESEND_ACTIVATION_EMAIL_URL = "/users/resend-activation-email";
-    public static final String RESET_PASSWORD_URL = "/users/reset-password";
-    public static final String RESET_PASSWORD_VERIFICATION_URL = "/users/reset-password-verification";
-    public static final String RESET_PASSWORD_SUCCESS_URL = "/users/reset-password-success";
     public static final String LOGIN = "/login";
 }
