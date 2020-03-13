@@ -37,14 +37,11 @@ public class Video extends BaseEntity {
      * Function used to generate a key for each video
      */
     private String generateKey() {
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 20;
-        Random random = new Random();
-
-        return random.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+        Random r = new Random();
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 32) {
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+        return sb.toString().substring(0, 32);
     }
 }

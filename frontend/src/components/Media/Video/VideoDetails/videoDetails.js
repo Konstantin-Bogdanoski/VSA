@@ -24,7 +24,10 @@ const VideoDetails = () => {
             controls: true,
             sources: [{
                 src: fileName,
-                type: 'application/x-mpegURL'
+                type: 'application/x-mpegURL',
+                keySystems: {
+                    'com.widevine.alpha': 'http://localhost/videos/' + movie.fileName.split("/")[0] + "/enc.key"
+                }
             }]
         };
     }

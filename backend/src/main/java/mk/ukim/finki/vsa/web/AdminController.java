@@ -98,7 +98,7 @@ public class AdminController {
                 Files.write(path, bytes);
                 logger.info("[UPLOAD] " + newVid.getFileName() + " has been uploaded, trying to encode video");
                 try {
-                    formatVideo(newVid.getFileName(), highQuality, lowQuality);
+                    formatVideo(newVid.getFileName(), newVid.getKey(), highQuality, lowQuality);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -179,11 +179,12 @@ public class AdminController {
      * Function used to format the video
      *
      * @param path = path of the video (video/video.mp4)
+     * @param key  = encryption key of the video
      * @param hq   = is the video HQ (1920x1080)
      * @param lq   = is the video LQ (800x600)
      *             Default formatting is the medium quality (1280x720)
      */
-    private void formatVideo(String path, boolean hq, boolean lq) throws IOException, InterruptedException {
+    private void formatVideo(String path, String key, boolean hq, boolean lq) throws IOException, InterruptedException {
         String loc = UPLOADED_FOLDER + path.split("/")[0];
         String fileName = path.split("/")[1];
         // 0 - Medium Quality, 1 - Medium + Low, 2 - Medium + High, 3 - All
@@ -201,7 +202,7 @@ public class AdminController {
                   location = /home/konstantin/Videos/video
                   fileName = video.mp4 */
 
-        String[] cmd = {UPLOADED_FOLDER + "formatVideo.sh", loc, quality + "", fileName};
+        String[] cmd = {UPLOADED_FOLDER + "formatVideo.sh", loc, quality + "", fileName, key};
         ProcessBuilder pb = new ProcessBuilder(cmd);
         pb.inheritIO();
         Process p = pb.start();
