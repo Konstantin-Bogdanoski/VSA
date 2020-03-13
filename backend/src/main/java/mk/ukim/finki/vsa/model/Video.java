@@ -39,9 +39,9 @@ public class Video extends BaseEntity {
     private String generateKey() {
         Random r = new Random();
         StringBuilder sb = new StringBuilder();
-        while (sb.length() < 32) {
+        while (sb.length() < 15) {
             sb.append(Integer.toHexString(r.nextInt()));
         }
-        return sb.toString().substring(0, 32);
+        return sb.toString().substring(0, 15);
     }
 }

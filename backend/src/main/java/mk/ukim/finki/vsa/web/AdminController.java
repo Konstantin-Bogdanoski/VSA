@@ -144,7 +144,7 @@ public class AdminController {
      */
     @DeleteMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
-    public Video delete(@PathVariable("id") Long vID) {
+    public Long delete(@PathVariable("id") Long vID) {
         if (!videoService.findOne(vID).isPresent())
             throw new VideoNotFoundException();
         logger.info("[REMOVE] Trying to remove video");
@@ -158,7 +158,7 @@ public class AdminController {
             e.printStackTrace();
         }
         logger.info("[REMOVE] " + video.getFileName() + " has been removed");
-        return video;
+        return video.getId();
     }
 
 
@@ -196,7 +196,7 @@ public class AdminController {
         else if (hq)
             quality = 2;
 
-        /*The script formatVideo.sh takes 3 arguements, Location, Quality and FileName
+        /*The script formatVideo.sh takes 4 arguements, Location, Quality, FileName and Key
          Location: Parent folder of video
               if video.path == /home/konstantin/Videos/video/video.mp4
                   location = /home/konstantin/Videos/video
