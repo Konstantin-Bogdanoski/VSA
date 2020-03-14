@@ -78,7 +78,7 @@ class App extends Component {
     searchTerm = ((term) => {
         let newFilteredMedia = [];
         this.state.media.forEach(entry => {
-            if (entry.name.includes(term))
+            if (entry.name.toLowerCase().includes(term.toLowerCase()))
                 newFilteredMedia.push(entry)
         });
         this.setState({filteredMedia: newFilteredMedia})
