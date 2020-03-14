@@ -26,8 +26,12 @@ public class Video extends BaseEntity {
     @Lob
     @Column(name = "description", length = 2000)
     private String description;
-    @ManyToMany(mappedBy = "videos")
-    private List<Quality> qualities;
+
+    private boolean HQ;
+
+    private boolean LQ;
+
+    private boolean MQ;
 
     public void setKey() {
         this.key = generateKey();

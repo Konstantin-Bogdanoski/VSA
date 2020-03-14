@@ -4,9 +4,7 @@ import mk.ukim.finki.vsa.exception.IncorrectVideoUploadException;
 import mk.ukim.finki.vsa.exception.UnableToDeleteVideoException;
 import mk.ukim.finki.vsa.exception.VideoAlreadyExistsException;
 import mk.ukim.finki.vsa.exception.VideoNotFoundException;
-import mk.ukim.finki.vsa.model.Quality;
 import mk.ukim.finki.vsa.model.Video;
-import mk.ukim.finki.vsa.service.QualityService;
 import mk.ukim.finki.vsa.service.VideoService;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +29,6 @@ import java.util.logging.Logger;
 @CrossOrigin("*")
 public class AdminController {
     private VideoService videoService;
-    private QualityService qualityService;
     /**
      * Logger which will help us view the status of our backend service
      */
@@ -42,9 +39,8 @@ public class AdminController {
      */
     private static String UPLOADED_FOLDER = "/home/konstantin/Videos/";
 
-    public AdminController(VideoService videoService, QualityService qualityService) {
+    public AdminController(VideoService videoService) {
         this.videoService = videoService;
-        this.qualityService = qualityService;
     }
 
     /**
@@ -75,13 +71,11 @@ public class AdminController {
             newVid.setName(name);
             newVid.setKey();
             newVid.setImgLink(imgLink);
-            List<Quality> qualities = new ArrayList<>();
-            qualities.add(qualityService.findByValue("Medium"));
             if (highQuality)
-                qualities.add(qualityService.findByValue("High"));
+                newVid.setHQ(true);
             if (lowQuality)
-                qualities.add(qualityService.findByValue("Low"));
-            newVid.setQualities(qualities);
+                newVid.setLQ(true);
+            newVid.setMQ(true);
             newVid.setDescription(description);
             String parentDir = Objects.requireNonNull(file.getOriginalFilename()).substring(0, file.getOriginalFilename().length() - 4).replace(" ", "_");
             newVid.setFileName(parentDir + "/" + file.getOriginalFilename().replace(" ", "_"));

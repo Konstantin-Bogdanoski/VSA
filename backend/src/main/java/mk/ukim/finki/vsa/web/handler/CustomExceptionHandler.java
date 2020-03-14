@@ -1,7 +1,6 @@
 package mk.ukim.finki.vsa.web.handler;
 
-import mk.ukim.finki.vsa.exception.VideoAlreadyExistsException;
-import mk.ukim.finki.vsa.exception.VideoNotFoundException;
+import mk.ukim.finki.vsa.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,7 +20,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(VideoNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> videoNotFound() {
-        return new ResponseEntity<>("Video not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Video was not found", HttpStatus.NOT_FOUND);
     }
 
     @ResponseBody
@@ -35,6 +34,41 @@ public class CustomExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<String> nullPointer() {
-        return new ResponseEntity<>("Null pointer Exception", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("An internal server error occurred, please contact your Administrator", HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(IncorrectVideoUploadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> incorrectVideoUpload() {
+        return new ResponseEntity<>("You are trying to upload a video with incorrect data", HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(PasswordsNotTheSameException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> passwordsNotTheSame() {
+        return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(QualityNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> qualityNotFound() {
+        return new ResponseEntity<>("Specified quality was not found", HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UnableToDeleteVideoException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> unableToDeleteVideo() {
+        return new ResponseEntity<>("Unable to delete the video", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> userNotFound() {
+        return new ResponseEntity<>("User does not exist", HttpStatus.BAD_REQUEST);
     }
 }
