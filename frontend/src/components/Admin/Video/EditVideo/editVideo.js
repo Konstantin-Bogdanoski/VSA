@@ -33,11 +33,11 @@ const EditVideo = (props) => {
     };
 
     return (
-        <div className="container">
+        <div className="container border-warning" style={{border: "1px solid black", padding: "1em"}}>
             <div className="form-group">
                 <div className="col-md-1"/>
-                <form className="card" onSubmit={onFormSubmit}>
-                    <h4 className="text-upper text-left text-dark">Edit Video</h4>
+                <form onSubmit={onFormSubmit}>
+                    <h4 className="text-upper text-left text-danger">Edit Video</h4>
                     <div className="form-group row">
                         <label htmlFor="video" className="col-sm-4 offset-sm-1 text-left text-dark">Name</label>
                         <div className="col-sm-6">

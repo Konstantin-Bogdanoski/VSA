@@ -85,7 +85,6 @@ class App extends Component {
             this.setState({
                 waitResponse: false,
             });
-            this.props.history.push("/admin")
         });
     });
 

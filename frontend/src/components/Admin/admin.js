@@ -17,12 +17,14 @@ const Admin = (props) => {
     if (localStorage.getItem("auth_token") !== null && localStorage.getItem("auth_token") !== undefined && videos !== undefined) {
         let movies = videos.map(video => {
             return (
-                <tr>
-                    <td>
-                        {video.id}
-                    </td>
+                <tr className="text-center" style={{verticalAlign: "middle"}}>
                     <td>
                         {video.name}
+                    </td>
+                    <td>
+                        {video.hq ? <span>1080p<br/></span> : ""}
+                        {video.mq ? <span>720p<br/></span> : ""}
+                        {video.lq ? <span>480p<br/></span> : ""}
                     </td>
                     <td>
                         {new Date(video.dateCreated).toLocaleString()}
@@ -56,44 +58,46 @@ const Admin = (props) => {
         return (
             <div className="container text-black-50">
                 <div>
-                    <table className="table table-bordered table-hover table-striped table-responsive-lg">
-                        <thead className="table-warning">
-                        <tr>
-                            <th colSpan={6}>
-                                <div style={{width: "33%", display: "inline-block"}}
-                                     className="text-danger text-left align-content-center"><h3>Videos</h3></div>
-                                <div style={{width: "33%", display: "inline-block"}}/>
-                                <div style={{width: "33%", display: "inline-block"}}>
-                                    <Link to={"/admin/add"} className="btn btn-outline-danger text-right">+ New
-                                        Video</Link>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                ID
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Created
-                            </th>
-                            <th>
-                                Updated
-                            </th>
-                            <th>
-                                Edit
-                            </th>
-                            <th>
-                                Delete
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {movies}
-                        </tbody>
-                    </table>
+                    <div className="navbar-header">
+                        <div style={{width: "33%", display: "inline-block"}}
+                             className="text-danger text-left align-content-center"><h3>Videos</h3></div>
+                        <div style={{width: "33%", display: "inline-block"}}/>
+                        <div style={{width: "33%", display: "inline-block"}}>
+                            <Link to={"/admin/add"} className="btn btn-outline-danger text-right">+ New
+                                Video</Link>
+                        </div>
+                    </div>
+                    <hr/>
+                    {(videos === null || videos === undefined || videos.length === 0 ? <div className="container">
+                            <h1 className="text-center text-info">No videos available</h1>
+                        </div> :
+                        <table className="table table-bordered table-hover table-striped table-responsive-lg">
+                            <thead className="table-warning">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th className="col-2">
+                                    Supported Qualities
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                                <th>
+                                    Updated
+                                </th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {movies}
+                            </tbody>
+                        </table>)}
                 </div>
             </div>
         )

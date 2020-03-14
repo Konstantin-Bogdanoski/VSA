@@ -10,9 +10,12 @@ const Media = (props) => {
     });
     return (
         <div className="container-fluid">
-            <div className="row">
-                {videos}
-            </div>
+            {(videos === null || videos === undefined || videos.length === 0 ? <div className="container">
+                    <h1 className="text-center text-info">No videos available</h1>
+                </div> :
+                <div className="row">
+                    {videos}
+                </div>)}
         </div>
     );
 };

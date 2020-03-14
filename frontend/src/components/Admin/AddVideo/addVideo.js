@@ -86,7 +86,7 @@ class AddVideo extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container border-warning" style={{border: "1px solid black", padding: "1em"}}>
                 <div className="form-group">
                     <div className="col-md-1"/>
                     {(this.state.errorMessage !== null ? <div>
@@ -99,8 +99,8 @@ class AddVideo extends Component {
                     </div> : <div/>)}
                     {(!this.state.waitResponse ?
                         <form>
-                            <div className="form-group row">
-                                <h4 className="text-upper text-left text-dark">Add Video</h4>
+                            <div className="form-group ">
+                                <h4 className="text-upper text-left text-danger">Add Video</h4>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="video"
@@ -212,7 +212,10 @@ class AddVideo extends Component {
                                     2. Encode qualities
                                 </p>
                                 <p>
-                                    3. Create MPD file
+                                    3. Encrypt files
+                                </p>
+                                <p>
+                                    4. Create master file
                                 </p>
                             </div>
                         </div>)}
