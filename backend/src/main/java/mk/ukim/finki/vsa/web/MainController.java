@@ -39,6 +39,8 @@ public class MainController {
         Optional<Video> video = videoService.findOne(id);
         if (!video.isPresent())
             throw new VideoNotFoundException();
+        video.get().setRequests(video.get().getRequests() + 1);
+        videoService.save(video.get());
         return video.get();
     }
 }

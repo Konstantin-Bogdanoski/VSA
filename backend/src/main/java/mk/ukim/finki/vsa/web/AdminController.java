@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -59,7 +58,6 @@ public class AdminController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Video upload(@RequestParam(required = false) MultipartFile file,
                         @RequestParam(value = "name") String name,
-                        @RequestParam(value = "description") String description,
                         @RequestParam(value = "imgLink") String imgLink,
                         @RequestParam(value = "hq", required = false) boolean highQuality,
                         @RequestParam(value = "lq", required = false) boolean lowQuality) {
@@ -76,7 +74,7 @@ public class AdminController {
             if (lowQuality)
                 newVid.setLQ(true);
             newVid.setMQ(true);
-            newVid.setDescription(description);
+            newVid.setRequests(0L);
             String parentDir = Objects.requireNonNull(file.getOriginalFilename()).substring(0, file.getOriginalFilename().length() - 4).replace(" ", "_");
             newVid.setFileName(parentDir + "/" + file.getOriginalFilename().replace(" ", "_"));
             // Get the video and save it somewhere
@@ -118,7 +116,6 @@ public class AdminController {
     @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public Video patch(@PathVariable("id") Long vID,
                        @RequestParam("name") String name,
-                       @RequestParam("description") String description,
                        @RequestParam("imgLink") String imgLink,
                        @RequestParam(value = "quailties", required = false) List<String> qualities) {
         if (!videoService.findOne(vID).isPresent())
@@ -126,7 +123,6 @@ public class AdminController {
         Video newVid = videoService.findOne(vID).get();
         newVid.setName(name);
         newVid.setKey();
-        newVid.setDescription(description);
         newVid.setImgLink(imgLink);
         videoService.save(newVid);
         return newVid;

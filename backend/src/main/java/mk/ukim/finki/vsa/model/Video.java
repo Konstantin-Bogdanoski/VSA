@@ -23,15 +23,14 @@ public class Video extends BaseEntity {
     @Column(name = "img_link", length = 1000)
     private String imgLink;
     private String fileName;
-    @Lob
-    @Column(name = "description", length = 2000)
-    private String description;
 
     private boolean HQ;
 
     private boolean LQ;
 
     private boolean MQ;
+
+    private Long requests;
 
     public void setKey() {
         this.key = generateKey();
