@@ -16,7 +16,7 @@ const Video = (props) => {
                     <div className="card mb-3 col-sm-4 bg-light border-warning"
                          style={{maxWidth: "20em", margin: "0.5em"}}>
                         <div className="card-header bg-transparent text-dark">{props.video.name} {props.video.hq ?
-                            <span className="text-info text-sm-center">
+                            <span className="text-danger">
                                 1080p
                             </span> : <span/>}</div>
                         <div className="card-body">

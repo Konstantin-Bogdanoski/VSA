@@ -113,16 +113,6 @@ class AddVideo extends Component {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="description"
-                                       className="col-sm-4 offset-sm-1 text-right text-dark">Description</label>
-                                <div className="col-sm-6">
-                                    <input type="text" onChange={this.handleTermOnChange}
-                                           className="form-control" id="description" name={"description"}
-                                           placeholder="Video description" required maxLength="2000"/>
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
                                 <label htmlFor="imgLink" className="col-sm-4 offset-sm-1 text-right text-dark">Image
                                     Link</label>
                                 <div className="col-sm-6">
@@ -169,7 +159,7 @@ class AddVideo extends Component {
                                     <button onClick={this.onSubmit}
                                             type="button"
                                             className="btn btn-outline-success text-upper">
-                                        Save
+                                        <span className="fa fa-check"/>
                                     </button>
                                 </div>
                                 <div
@@ -177,14 +167,14 @@ class AddVideo extends Component {
                                     <button
                                         type="reset"
                                         className="btn btn-outline-warning text-upper">
-                                        Reset
+                                        <span className="fa fa-eraser"/>
                                     </button>
                                 </div>
                                 <div
                                     className="offset-sm-1 col-sm-1  text-center">
                                     <Link to={"/admin"}
                                           className="btn btn-outline-danger text-upper">
-                                        Cancel
+                                        <span className="fa fa-remove"/>
                                     </Link>
                                 </div>
                             </div>

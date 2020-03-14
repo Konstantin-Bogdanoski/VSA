@@ -48,15 +48,6 @@ const EditVideo = (props) => {
                     </div>
 
                     <div className="form-group row">
-                        <label htmlFor="video" className="col-sm-4 offset-sm-1 text-left text-dark">Description</label>
-                        <div className="col-sm-6">
-                            <input type="text" onChange={handleTermOnChange} value={video.description}
-                                   className="form-control" id="video" name={"description"}
-                                   placeholder="Video description" required/>
-                        </div>
-                    </div>
-
-                    <div className="form-group row">
                         <label htmlFor="video" className="col-sm-4 offset-sm-1 text-left text-dark">Image Link</label>
                         <div className="col-sm-6">
                             <input type="text" onChange={handleTermOnChange} value={video.imgLink}
@@ -75,23 +66,23 @@ const EditVideo = (props) => {
                         <div
                             className="offset-sm-1 col-sm-1  text-center">
                             <button type="submit"
-                                    className="btn btn-primary text-upper">
-                                Save
+                                    className="btn btn-outline-primary text-upper">
+                                <span className="fa fa-check"/>
                             </button>
                         </div>
                         <div
                             className="offset-sm-1 col-sm-1  text-center">
                             <button
                                 type="reset"
-                                className="btn btn-warning text-upper">
-                                Reset
+                                className="btn btn-outline-warning text-upper">
+                                <span className="fa fa-eraser"/>
                             </button>
                         </div>
                         <div
                             className="offset-sm-1 col-sm-1  text-center">
                             <Link to={"/admin"}
-                                  className="btn btn-danger text-upper">
-                                Cancel
+                                  className="btn btn-outline-danger text-upper">
+                                <span className="fa fa-remove"/>
                             </Link>
                         </div>
                     </div>

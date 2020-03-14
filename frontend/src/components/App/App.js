@@ -10,6 +10,7 @@ import VideoDetails from "../Media/Video/VideoDetails/videoDetails";
 import MediaService from "../../repository/MediaService/mediaService";
 import AddVideo from "../Admin/AddVideo/addVideo";
 import EditVideo from "../Admin/Video/EditVideo/editVideo";
+import Footer from "../Footer/footer";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -109,6 +110,7 @@ class App extends Component {
                                 </div>
                             )}
                         </main>
+                        <Footer/>
                     </div>
                 </Router>
             </div>

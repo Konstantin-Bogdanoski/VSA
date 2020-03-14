@@ -23,17 +23,18 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
+                                <a className="nav-link" href="/"><i className="fa fa-home"/><span
+                                    className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/login">Login</Link>
+                                <Link className="nav-link" to="/login"><i className="fa fa-sign-in"/></Link>
                             </li>
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
                             <input className="form-control mr-sm-2" type="search" placeholder="Let's find something"
                                    aria-label="Search"/>
                             <button className="btn btn-outline-danger my-2 my-sm-0" type="submit"
-                                    onClick={this.props.searchTerm}>Search
+                                    onClick={this.props.searchTerm}><i className="fa fa-search"/>
                             </button>
                         </form>
                     </div>
