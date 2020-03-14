@@ -17,7 +17,11 @@ class Header extends Component {
         return (
             <div>
                 <nav className="navbar-expand-lg navbar navbar-light bg-warning">
-                    <a className="navbar-brand text-danger" href="/"><i className="fa fa-chevron-circle-down"/></a>
+                    <a target="_blank" rel="noopener noreferrer"
+                       href="https://github.com/Konstantin-Bogdanoski/VSA"
+                       className="btn btn-dark">
+                        <i className="fa fa-github"/>
+                    </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
