@@ -18,7 +18,7 @@ class Footer extends Component {
                     </a>
                 </div>
                 <div style={{width: "30%", display: "inline-block"}} className="text-sm-center text-danger">
-                    Video Streaming Application
+                    <i className="fa fa-chevron-circle-down"/> Video Streaming Application
                 </div>
                 <div style={{width: "30%", display: "inline-block"}} className="text-sm-right text-danger">
                     FCSE, 2020
