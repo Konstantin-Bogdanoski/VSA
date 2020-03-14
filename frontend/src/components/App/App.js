@@ -24,6 +24,7 @@ class App extends Component {
             username: "",
             role: "",
             media: [],
+            filteredMedia: [],
             waitResponse: false,
         }
     };
@@ -42,6 +43,7 @@ class App extends Component {
                 let media = resp.data;
                 return {
                     "media": media,
+                    "filteredMedia": media,
                     "waitResponse": false
                 }
             })
@@ -66,6 +68,7 @@ class App extends Component {
                 });
                 return {
                     "media": newMedia,
+                    "filteredMedia": newMedia,
                     "waitResponse": false
                 }
             });
@@ -73,7 +76,12 @@ class App extends Component {
     });
 
     searchTerm = ((term) => {
-        debugger;
+        let newFilteredMedia = [];
+        this.state.media.forEach(entry => {
+            if (entry.name.includes(term))
+                newFilteredMedia.push(entry)
+        });
+        this.setState({filteredMedia: newFilteredMedia})
     });
 
     deleteVideo = ((id) => {
@@ -97,10 +105,10 @@ class App extends Component {
                         <Header searchTerm={this.searchTerm}/>
                         <main id="main" role="main" className="content glyphicon-fullscreen">
                             {(!this.state.waitResponse ? <div className="content">
-                                    <Route path="/" exact render={() => <Media videos={this.state.media}/>}/>
+                                    <Route path="/" exact render={() => <Media videos={this.state.filteredMedia}/>}/>
                                     <Route path="/media/:id" exact render={() => <VideoDetails/>}/>
                                     <Route path="/login" exact render={() => <Login/>}/>
-                                    <Route path="/admin" exact render={() => <Admin videos={this.state.media}
+                                    <Route path="/admin" exact render={() => <Admin videos={this.state.filteredMedia}
                                                                                     onDelete={this.deleteVideo}/>}/>
                                     <Route path="/admin/add" exact render={() => <AddVideo state={this.state}/>}/>
                                     <Route path="/admin/media/:id/edit" exact

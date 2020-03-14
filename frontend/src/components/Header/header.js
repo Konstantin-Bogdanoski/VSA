@@ -9,6 +9,10 @@ class Header extends Component {
         super(props);
     }
 
+    handleChange = (e) => {
+        this.props.searchTerm(e.target.value)
+    };
+
     render() {
         return (
             <div>
@@ -31,11 +35,9 @@ class Header extends Component {
                             </li>
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Let's find something"
+                            <input onChange={this.handleChange} className="form-control mr-sm-2 border-danger"
+                                   type="search" placeholder="Let's find something"
                                    aria-label="Search"/>
-                            <button className="btn btn-outline-danger my-2 my-sm-0" type="submit"
-                                    onClick={this.props.searchTerm}><i className="fa fa-search"/>
-                            </button>
                         </form>
                     </div>
                 </nav>
