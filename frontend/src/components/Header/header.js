@@ -36,8 +36,8 @@ class Header extends Component {
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
                             <input onChange={this.handleChange} className="form-control mr-sm-2 border-danger"
-                                   type="search" placeholder="Let's find something"
-                                   aria-label="Search"/>
+                                   type="search" placeholder="Let's find something interesting"
+                                   aria-label="Search" id="searchBar"/>
                         </form>
                     </div>
                 </nav>
