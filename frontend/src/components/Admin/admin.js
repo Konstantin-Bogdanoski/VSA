@@ -1,42 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link, withRouter} from "react-router-dom";
-import MediaService from "../../repository/MediaService/mediaService";
 import moment from "moment";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
 const Admin = (props) => {
-    let [videos, setVideos] = useState();
-    useEffect(() => {
-        MediaService.loadMedia().then(resp => {
-            videos = resp.data;
-            setVideos(videos);
-        });
-    }, []);
-
-    if (localStorage.getItem("auth_token") !== null && localStorage.getItem("auth_token") !== undefined && videos !== undefined) {
-        let movies = videos.map(video => {
+    if (localStorage.getItem("auth_token") !== null && localStorage.getItem("auth_token") !== undefined && props.videos !== undefined) {
+        let movies = props.videos.map(video => {
             return (
                 <tr className="text-center" style={{verticalAlign: "middle"}}>
-                    <td style={{verticalAlign: "middle"}}>
+                    <td style={{verticalAlign: "middle", width: "30%"}}>
                         {video.name}
                     </td>
-                    <td style={{verticalAlign: "middle"}}>
+                    <td style={{verticalAlign: "middle", width: "20%"}}>
                         {video.hq ? <span>1080p<br/></span> : ""}
                         {video.mq ? <span>720p<br/></span> : ""}
                         {video.lq ? <span>480p<br/></span> : ""}
                     </td>
-                    <td style={{verticalAlign: "middle"}}>
+                    <td style={{verticalAlign: "middle", width: "10%"}}>
                         {video.requests}
                     </td>
-                    <td style={{verticalAlign: "middle"}} className="text-sm-center">
+                    <td style={{verticalAlign: "middle", width: "20%"}} className="text-sm-center">
                         {moment(video.dateCreated).format("DD.MM.YYYY HH:mm")}
                     </td>
-                    <td style={{verticalAlign: "middle"}}>
+                    <td style={{verticalAlign: "middle", width: "20%"}}>
                         {moment(video.dateUpdated).format("DD.MM.YYYY HH:mm")}
                     </td>
-                    <td style={{verticalAlign: "middle"}}>
+                    <td style={{verticalAlign: "middle", width: "20%"}}>
                         <div className="col-md-6 text-center">
                             <Link to={"/admin/media/" + video.id + "/edit"}
                                   className="btn btn-sm btn-outline-success">
@@ -70,7 +61,8 @@ const Admin = (props) => {
                         </div>
                     </div>
                     <hr/>
-                    {(videos === null || videos === undefined || videos.length === 0 ? <div className="container">
+                    {(props.videos === null || props.videos === undefined || props.videos.length === 0 ?
+                        <div className="container">
                             <h1 className="text-center text-info">No videos available</h1>
                         </div> :
                         <table className="table table-bordered table-hover table-striped table-responsive-lg">
@@ -108,7 +100,7 @@ const Admin = (props) => {
         )
     } else
         return (
-            <div className="container text-black-50">
+            <div className="container page-header text-danger">
                 You are not permitted to view this page!
             </div>
         )

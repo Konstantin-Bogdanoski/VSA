@@ -40,7 +40,7 @@ const VideoDetails = () => {
             <div data-vjs-player>
                 <VideoPlayer {...videoJsOptions} />
             </div>
-        </div> : <div>Please wait while we load the video</div>)
+        </div> : <div className="text-info text-center">Please wait while we load the video</div>)
     );
 };
 

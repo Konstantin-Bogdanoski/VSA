@@ -4,10 +4,6 @@ import React, {Component} from 'react';
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
 class Footer extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="card-footer footer border-danger" style={{zIndex: "-1"}}>

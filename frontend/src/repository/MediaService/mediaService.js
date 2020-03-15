@@ -1,6 +1,9 @@
-import React from 'react';
 import axios from '../../axios/axios';
 import qs from 'qs';
+
+/**
+ * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ */
 
 const MediaService = {
     loadMedia: () => {
@@ -8,9 +11,6 @@ const MediaService = {
     },
     loadMovie: (id) => {
         return axios.get("/api/video/" + id);
-    },
-    playMovie: (id, key) => {
-        return "To be implemented";
     },
     editMovie(updatedMovie) {
         const data = {

@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import axios from '../../../../axios/axios'
 import {withRouter, useParams, Link} from 'react-router-dom';
 
+/**
+ * @author Natasha Stojanova (natashastojanova6@gmail.com)
+ */
+
 const EditVideo = (props) => {
     const [video, setVideo] = useState({});
     const {id} = useParams();

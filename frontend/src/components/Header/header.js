@@ -5,10 +5,6 @@ import {Link} from "react-router-dom";
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
 class Header extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleChange = (e) => {
         this.props.searchTerm(e.target.value)
     };
