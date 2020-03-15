@@ -16,10 +16,29 @@ class Login extends Component {
             username: '',
             password: '',
             waitResponse: false,
+            errMessage: null,
         }
     }
 
+    setErrorMessage(error) {
+        if (error.response.status === 403)
+            this.setState({
+                errMessage: "Invalid credentials"
+            });
+        else
+            this.setState({
+                errMessage: error.response.data,
+            })
+    }
+
+    clearErrorMessage() {
+        this.setState({
+            errMessage: null
+        })
+    }
+
     handleClick(event) {
+        this.clearErrorMessage();
         this.setState({
             waitResponse: true,
         });
@@ -34,8 +53,11 @@ class Login extends Component {
             });
             this.props.history.push('/admin');
         }).catch(error => {
-            alert(error);
-        });
+            this.setErrorMessage(error);
+            this.setState({
+                waitResponse: false,
+            });
+        })
     }
 
     componentDidMount() {
@@ -50,6 +72,9 @@ class Login extends Component {
                     <MuiThemeProvider>
                         <div>
                             <h1 className="text-dark">Login</h1>
+                            {this.state.errMessage !== null ? <div className="text-center text-danger">
+                                <span>{this.state.errMessage}</span>
+                            </div> : <div/>}
                             <TextField
                                 hintText="Enter your Username"
                                 floatingLabelText="Username"
