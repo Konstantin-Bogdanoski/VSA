@@ -20,7 +20,6 @@ const EditVideo = (props) => {
             {
                 "videoID": id,
                 "name": e.target.name.value,
-                "description": e.target.description.value,
                 "imgLink": e.target.imgLink.value,
             },
         );

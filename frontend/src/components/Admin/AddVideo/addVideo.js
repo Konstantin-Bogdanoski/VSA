@@ -53,7 +53,6 @@ class AddVideo extends Component {
         const formData = new FormData();
         formData.append("file", this.state.selectedFile);
         formData.append("name", this.state.name);
-        formData.append("description", this.state.description);
         formData.append("imdbLink", this.state.imdbLink);
         formData.append("imgLink", this.state.imgLink);
         formData.append("hq", hq);
