@@ -1,6 +1,5 @@
 package mk.ukim.finki.vsa.service.implementation;
 
-import mk.ukim.finki.vsa.exception.VideoNotFoundException;
 import mk.ukim.finki.vsa.model.Video;
 import mk.ukim.finki.vsa.repository.VideoRepository;
 import mk.ukim.finki.vsa.service.VideoService;
