@@ -2,7 +2,6 @@ package mk.ukim.finki.vsa.service.implementation;
 
 import mk.ukim.finki.vsa.exception.UserNotFoundException;
 import mk.ukim.finki.vsa.model.User;
-import mk.ukim.finki.vsa.model.base.UserRole;
 import mk.ukim.finki.vsa.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,6 +1,5 @@
 package mk.ukim.finki.vsa.service.implementation;
 
-import mk.ukim.finki.vsa.model.User;
 import mk.ukim.finki.vsa.model.base.UserRole;
 import mk.ukim.finki.vsa.repository.UserRoleRepository;
 import mk.ukim.finki.vsa.service.UserRoleService;

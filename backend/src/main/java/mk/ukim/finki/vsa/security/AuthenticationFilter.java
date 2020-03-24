@@ -1,7 +1,6 @@
 package mk.ukim.finki.vsa.security;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mk.ukim.finki.vsa.dto.UserLogin;
 import mk.ukim.finki.vsa.exception.PasswordsNotTheSameException;

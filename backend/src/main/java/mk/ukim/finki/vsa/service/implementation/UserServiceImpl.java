@@ -31,15 +31,6 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
     }
 
     @Override
-    public User findByEmail(String email) {
-        logger.info("[PERSISTENCE] Get entity by Email");
-        Optional<User> user = repository.findByEmail(email);
-        if (user.isPresent())
-            return user.get();
-        throw new UserNotFoundException();
-    }
-
-    @Override
     public boolean passwordMatches(User user, String password) {
         return encoder.matches(password, user.getPassword());
     }

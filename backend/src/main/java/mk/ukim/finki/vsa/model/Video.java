@@ -3,10 +3,8 @@ package mk.ukim.finki.vsa.model;
 import lombok.Getter;
 import lombok.Setter;
 import mk.ukim.finki.vsa.model.base.BaseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Random;
 
 /**
