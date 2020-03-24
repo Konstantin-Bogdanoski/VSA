@@ -22,9 +22,4 @@ public class VideoServiceImpl extends BaseEntityCrudServiceImpl<Video, VideoRepo
     protected VideoRepository getRepository() {
         return repository;
     }
-
-    @Override
-    public Video findByName(String name) {
-        return getRepository().findByName(name).orElseThrow(VideoNotFoundException::new);
-    }
 }
