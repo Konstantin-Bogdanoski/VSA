@@ -8,5 +8,5 @@ import javax.management.relation.RoleNotFoundException;
  * @author Natasha Stojanova
  */
 public interface UserRoleService extends BaseEntityCrudService<UserRole> {
-    public UserRole findByName(String name) throws RoleNotFoundException;
+    UserRole findByName(String name) throws RoleNotFoundException;
 }

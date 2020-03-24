@@ -1,6 +1,5 @@
 package mk.ukim.finki.vsa.repository;
 
-import mk.ukim.finki.vsa.model.User;
 import mk.ukim.finki.vsa.model.base.UserRole;
 import org.springframework.stereotype.Repository;
 

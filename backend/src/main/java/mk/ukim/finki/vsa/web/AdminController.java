@@ -77,7 +77,6 @@ public class AdminController {
             newVid.setRequests(0L);
             String parentDir = Objects.requireNonNull(file.getOriginalFilename()).substring(0, file.getOriginalFilename().length() - 4).replace(" ", "_");
             newVid.setFileName(parentDir + "/" + file.getOriginalFilename().replace(" ", "_"));
-            // Get the video and save it somewhere
             byte[] bytes = file.getBytes();
             File check = new File(UPLOADED_FOLDER + parentDir);
             if (!check.exists()) {
@@ -95,7 +94,6 @@ public class AdminController {
                     e.printStackTrace();
                 }
                 logger.info("[UPLOAD] Video encoded");
-                // Save info about video in DB
                 newVid.setFileName(newVid.getFileName() + ".m3u8");
                 videoService.save(newVid);
             } else
@@ -185,13 +183,11 @@ public class AdminController {
             quality = 1;
         else if (hq)
             quality = 2;
-
         /*The script formatVideo.sh takes 4 arguements, Location, Quality, FileName and Key
          Location: Parent folder of video
               if video.path == /home/konstantin/Videos/video/video.mp4
                   location = /home/konstantin/Videos/video
                   fileName = video.mp4 */
-
         String[] cmd = {UPLOADED_FOLDER + "formatVideo.sh", loc, quality + "", fileName, key};
         ProcessBuilder pb = new ProcessBuilder(cmd);
         pb.inheritIO();

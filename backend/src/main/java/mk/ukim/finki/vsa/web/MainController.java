@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * @author Natasha Stojanova (natashastojanova6@gmail.com)
  * This class represents the main controller with which our users will communicate
  * All users can look at videos, but only an admin can perform CRUD operations
  */

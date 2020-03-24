@@ -10,9 +10,7 @@ import mk.ukim.finki.vsa.model.base.UserRole;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Optional;
 
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
@@ -31,7 +29,6 @@ public class User extends BaseEntity {
     private String name;
     @ManyToOne
     private UserRole userRole;
-
     public User(String username, String name, String email, String password) {
         this.username = username;
         this.name = name;

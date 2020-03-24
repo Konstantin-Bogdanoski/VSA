@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.constraints.Null;
-
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
  * This class is used to catch some of the runtime exceptions
