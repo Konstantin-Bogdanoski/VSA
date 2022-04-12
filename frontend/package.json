@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@videojs/http-streaming": "^1.12.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "classnames": "^2.2.6",
     "history": "latest",
     "material-ui": "^0.20.2",
